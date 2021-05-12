@@ -1,0 +1,42 @@
+name: Build
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java_version: ['11', '16']
+    env:
+      JAVA_OPTS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+    - uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: ${{ matrix.java_version }}
+    - uses: actions/cache@v2.1.5
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - name: Cache SonarCloud packages
+      if: ${{ env.SONAR_TOKEN != null && env.SONAR_TOKEN != '' && matrix.java_version == '11' }}
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      uses: actions/cache@v2.1.5
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    - name: Build
+      run: ./mvnw -B -V -ntp install
+#    - name: Analyze with SonarCloud
+#      if: ${{ env.SONAR_TOKEN != null && env.SONAR_TOKEN != '' && matrix.java_version == '11' }}
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+#        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#      run: ./mvnw -B -V -ntp org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
