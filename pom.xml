@@ -81,7 +81,6 @@
 
         <java.version>11</java.version>
         <maven.compiler.release>11</maven.compiler.release>
-        <maven.deploy.skip>true</maven.deploy.skip>
         <maven.site.deploy.skip>true</maven.site.deploy.skip>
     </properties>
 
