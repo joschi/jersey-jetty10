@@ -130,7 +130,7 @@
                 <version>3.3.2</version>
                 <configuration>
                     <links combine.self="override">
-                        <link>https://eclipse-ee4j.github.io/jaxrs-api/apidocs/2.1.6/</link>
+                        <link>https://jakartaee.github.io/rest/apidocs/2.1.6/</link>
                         <link>https://javaee.github.io/hk2/apidocs/</link>
                     </links>
                 </configuration>
