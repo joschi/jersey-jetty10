@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2011, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -22,12 +22,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-import com.github.joschi.jersey.jetty10.test.JettyTestContainerFactory;
+import com.github.joschi.jersey.jetty10.JettyHttpContainer;
+import com.github.joschi.jersey.jetty10.JettyHttpContainerFactory;
 import org.glassfish.jersey.inject.hk2.DelayedHk2InjectionManager;
 import org.glassfish.jersey.inject.hk2.ImmediateHk2InjectionManager;
 import org.glassfish.jersey.internal.inject.InjectionManager;
-import com.github.joschi.jersey.jetty10.JettyHttpContainer;
-import com.github.joschi.jersey.jetty10.JettyHttpContainerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 
@@ -36,9 +35,9 @@ import org.glassfish.hk2.api.ServiceLocator;
 import org.jvnet.hk2.internal.ServiceLocatorImpl;
 
 import org.eclipse.jetty.server.Server;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test class for {@link JettyHttpContainer}.
@@ -84,8 +83,8 @@ public class JettyContainerTest extends JerseyTest {
     public void testJettyContainerTarget() {
         final Response response = target().path("one").request().get();
 
-        assertEquals("Response status unexpected.", 200, response.getStatus());
-        assertEquals("Response entity unexpected.", "get", response.readEntity(String.class));
+        assertEquals(200, response.getStatus(), "Response status unexpected.");
+        assertEquals("get", response.readEntity(String.class), "Response entity unexpected.");
     }
 
     /**
@@ -107,7 +106,7 @@ public class JettyContainerTest extends JerseyTest {
         } else {
             throw new RuntimeException("Invalid Hk2 InjectionManager");
         }
-        assertTrue("Application injection manager was expected to have defined parent locator",
-                   serviceLocator.getParent() == locator);
+        assertTrue(serviceLocator.getParent() == locator,
+                   "Application injection manager was expected to have defined parent locator");
     }
 }

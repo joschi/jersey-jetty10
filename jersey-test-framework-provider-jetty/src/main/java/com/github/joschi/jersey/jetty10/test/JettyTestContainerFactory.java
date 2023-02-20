@@ -23,8 +23,8 @@ import java.util.logging.Logger;
 import javax.ws.rs.core.UriBuilder;
 
 import com.github.joschi.jersey.jetty10.JettyHttpContainer;
-import org.glassfish.jersey.client.ClientConfig;
 import com.github.joschi.jersey.jetty10.JettyHttpContainerFactory;
+import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.test.DeploymentContext;
 import org.glassfish.jersey.test.spi.TestContainer;
 import org.glassfish.jersey.test.spi.TestContainerException;
